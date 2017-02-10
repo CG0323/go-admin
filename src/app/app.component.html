@@ -1,23 +1,30 @@
-<app-header>Loading header...</app-header>
+<div>
+    <app-header>Loading header...</app-header>
 
-<app-menu-aside [links]="mylinks">Loading menu...</app-menu-aside>
+    <app-menu-aside [links]="mylinks" [user]="user">Loading menu...</app-menu-aside>
 
-<!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <toaster-container [toasterconfig]="toastrConfig"></toaster-container>
-    <app-breadcrumb></app-breadcrumb>
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <toaster-container [toasterconfig]="toastrConfig"></toaster-container>
+        <app-breadcrumb></app-breadcrumb>
 
-    <!-- Main content -->
-    <section class="content">
-        <div class="box box-default">
-            <div class="box-body">
-                <router-outlet></router-outlet>
+        <!-- Main content -->
+        <section class="content">
+            <div class="box box-default">
+                <div class="box-body">
+                    <router-outlet></router-outlet>
+                </div>
             </div>
-        </div>
-    </section>
-    <!-- /.content -->
+        </section>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+    <app-footer>Loading footer...</app-footer>
+    <!--<app-aside>Loading control sidebar...</app-aside>-->
 </div>
-<!-- /.content-wrapper -->
-<app-footer>Loading footer...</app-footer>
-<!--<app-aside>Loading control sidebar...</app-aside>-->
+<!--<div *ngIf='!loggedIn'>
+    <div class="login-container">
+        <router-outlet name="notloggedin"></router-outlet>
+    </div>
+</div>-->

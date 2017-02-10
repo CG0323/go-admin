@@ -3,7 +3,10 @@ import { User } from './models/user';
 import { UserService } from './services/user.service';
 import { LoggerService } from './services/logger.service';
 import { Message } from './models/message';
-// import { MessagesService } from './services/messages.service';
+import { Account} from './models/index';
+import { Store} from '@ngrx/store';
+import { Observable } from 'rxjs/Observable';
+import { IAppState, getCurrentAccount} from './app.states';
 import { ToasterService, ToasterConfig } from 'angular2-toaster/angular2-toaster';
 
 @Component( {
@@ -16,14 +19,47 @@ export class AppComponent implements OnInit {
     private toastrConfig: ToasterConfig;
     private logger: LoggerService;
     private mylinks: Array<any> = [];
-
+    private user:string = '';
+    private currentAccount: Account;
+    private subscription;
     constructor( private userServ: UserService, 
+        private store: Store<IAppState>,   
         // private msgServ: MessagesService,
         private toastr: ToasterService) {
+            
         this.toastrConfig = new ToasterConfig( {
             newestOnTop: true,
             showCloseButton: true,
             tapToDismiss: false
+        });
+        this.subscription = store.let(getCurrentAccount).subscribe(account=>{
+            this.currentAccount = <Account>account;
+            if(!this.currentAccount){
+                this.mylinks = [];
+            }else if(this.currentAccount.role == "管理员"){
+                this.user = this.currentAccount.name;
+                this.mylinks = [
+                    {
+                    'title': '教师列表',
+                    'icon': 'user',
+                    'link': ['/teachers']
+                    },
+                    {
+                    'title': '学员列表',
+                    'icon': 'user',
+                    'link': ['/students']
+                    },
+                 ];
+            }else{
+                this.user = this.currentAccount.name;
+                this.mylinks = [
+                    {
+                    'title': '学员列表',
+                    'icon': 'user',
+                    'link': ['/students']
+                    }
+                ];
+            }
         });
         // this.translate = translate.getTranslate();
         // this.logger = new LoggerService( this.translate );
@@ -57,12 +93,12 @@ export class AppComponent implements OnInit {
         this.userServ.setCurrentUser( user1 );
 
         // define here your own links menu structure
-        this.mylinks = [
-          {
-            'title': '教师列表',
-            'icon': 'user',
-            'link': ['/teachers']
-          },
+        // this.mylinks = [
+        //   {
+        //     'title': '教师列表',
+        //     'icon': 'user',
+        //     'link': ['/teachers']
+        //   },
         //   {
         //     'title': '添加教师',
         //     'icon': 'user-plus',
@@ -109,7 +145,7 @@ export class AppComponent implements OnInit {
         //       }
         //     ]
         //   }
-        ];
+        // ];
 
         // sending a test message
         // this.msgServ.addMessage( new Message( {
@@ -118,6 +154,10 @@ export class AppComponent implements OnInit {
         //     destination: user1,
         //     title: 'un message super important'
         // }) );
+    }
+
+      ngOnDestroy(){
+        this.subscription.unsubscribe();
     }
 
     protected detectIE(): any {

@@ -1,11 +1,12 @@
 import { ModuleWithProviders } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { CanActivateGuard } from './services/guard.service';
-
+import { AuthGuard } from './services/authGuard.service';
+import { AdminGuard } from './services/adminGuard.service';
 // Components
+import { StudentsComponent } from './pages/students/students.component';
 import { TeachersComponent } from './pages/teachers/teachers.component';
 import { PageNumComponent } from './pages/page-num/page-num.component';
-import { ClientComponent } from './pages/client/client.component';
+import { LoginComponent } from './pages/login/login.component';
 
 const routes: Routes = [
   // Root
@@ -15,18 +16,23 @@ const routes: Routes = [
     pathMatch:'full'
   },
   {
+    canActivate: [AuthGuard,AdminGuard],
     component: TeachersComponent,
     path: 'teachers'
   },
   {
-    canActivate: [CanActivateGuard],
+    canActivate: [AuthGuard],
+    component: StudentsComponent,
+    path: 'students'
+  },
+  {
+    canActivate: [AuthGuard],
     component: PageNumComponent,
     path: 'page/:id'
   },
   {
-    canActivate: [CanActivateGuard],
-    component: ClientComponent,
-    path: 'client'
+    component: LoginComponent,
+    path: 'login'
   }
 ];
 

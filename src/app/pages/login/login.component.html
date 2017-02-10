@@ -1,0 +1,14 @@
+<div class="container">
+    <div class="login-card">
+        <h1>系统管理</h1><br>
+        <form>
+            <input type="text" name="user" placeholder="用户名" [(ngModel)]="username">
+            <input type="password" name="pass" placeholder="密码" [(ngModel)]="password">
+            <button type="button" pButton class="login login-submit" label="登陆" (click)="login()"></button>
+        </form>
+    </div>
+
+    <div class="login-help">
+        <label *ngIf="isLoginFailed()">用户名或密码有误</label>
+    </div>
+</div>

@@ -5,10 +5,15 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule, Http } from '@angular/http';
 import { RouterModule } from '@angular/router';
 import { AlertModule, DatepickerModule } from 'ng2-bootstrap';
+import { StoreModule } from '@ngrx/store';
 import { AngularFireModule, FirebaseAppConfig } from 'angularfire2';
 import { ToasterModule } from 'angular2-toaster/angular2-toaster';
 import { environment } from '../environments/environment';
 import { TranslateModule, TranslateLoader, TranslateStaticLoader } from 'ng2-translate';
+import { EffectsModule } from '@ngrx/effects';
+import { UserEffects } from './effects/index';
+import { AppReducer } from './app.states';
+
 
 export function createTranslateLoader( http: Http ) {
     return new TranslateStaticLoader( http, '../public/assets/i18n', '.json' );
@@ -27,7 +32,9 @@ let modules = [
         provide: TranslateLoader,
         useFactory: (createTranslateLoader)
     }),
-    ToasterModule
+    ToasterModule,
+    StoreModule.provideStore(AppReducer),
+    EffectsModule.run(UserEffects)
 ];
 
 import { AppComponent } from './app.component';
@@ -57,38 +64,46 @@ let widgets = [
 
 import { UserService } from './services/user.service';
 // import { MessagesService } from './services/messages.service';
-import { CanActivateGuard } from './services/guard.service';
+import { AuthGuard } from './services/authGuard.service';
+import { AdminGuard } from './services/adminGuard.service';
 // import { NotificationService } from './services/notification.service';
 import { BreadcrumbService } from './services/breadcrumb.service';
 import { LoggerService } from './services/logger.service';
-
+import { AuthService } from './services/index';
+import { Configuration} from './app.constants';
 let services = [
     UserService,
     BreadcrumbService,
     // MessagesService,
-    CanActivateGuard,
+    AuthGuard,
+    AdminGuard,
     // NotificationService,
-    LoggerService
+    LoggerService,
+    Configuration,
+    AuthService,
+
 ];
 
+import { StudentsComponent } from './pages/students/students.component';
 import { TeachersComponent } from './pages/teachers/teachers.component';
 import { PageNumComponent } from './pages/page-num/page-num.component';
-import { ClientComponent } from './pages/client/client.component';
 
 let pages = [
     TeachersComponent,
     PageNumComponent,
-    ClientComponent,
+    LoginComponent,
+    StudentsComponent,
 ];
 
 // main bootstrap
 import { routing } from './app.routes';
+import { LoginComponent } from './pages/login/login.component';
 
 @NgModule( {
     bootstrap: [AppComponent],
     declarations: [
         ...widgets,
-        ...pages
+        ...pages,
     ],
     imports: [
         ...modules,
