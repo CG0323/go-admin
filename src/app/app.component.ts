@@ -3,7 +3,7 @@ import { User } from './models/user';
 import { UserService } from './services/user.service';
 import { LoggerService } from './services/logger.service';
 import { Message } from './models/message';
-import { MessagesService } from './services/messages.service';
+// import { MessagesService } from './services/messages.service';
 import { ToasterService, ToasterConfig } from 'angular2-toaster/angular2-toaster';
 
 @Component( {
@@ -17,7 +17,8 @@ export class AppComponent implements OnInit {
     private logger: LoggerService;
     private mylinks: Array<any> = [];
 
-    constructor( private userServ: UserService, private msgServ: MessagesService,
+    constructor( private userServ: UserService, 
+        // private msgServ: MessagesService,
         private toastr: ToasterService) {
         this.toastrConfig = new ToasterConfig( {
             newestOnTop: true,
@@ -111,12 +112,12 @@ export class AppComponent implements OnInit {
         ];
 
         // sending a test message
-        this.msgServ.addMessage( new Message( {
-            author: user2,
-            content: 'le contenu d\'un message d\'une importance extreme',
-            destination: user1,
-            title: 'un message super important'
-        }) );
+        // this.msgServ.addMessage( new Message( {
+        //     author: user2,
+        //     content: 'le contenu d\'un message d\'une importance extreme',
+        //     destination: user1,
+        //     title: 'un message super important'
+        // }) );
     }
 
     protected detectIE(): any {
