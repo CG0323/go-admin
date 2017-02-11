@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from './services/user.service';
 import { LoggerService } from './services/logger.service';
 import { Message } from './models/message';
 import { Account} from './models/index';
@@ -21,9 +20,8 @@ export class AppComponent implements OnInit {
     private user:string = '';
     private currentAccount: Account;
     private subscription;
-    constructor( private userServ: UserService, 
+    constructor(
         private store: Store<IAppState>,   
-        // private msgServ: MessagesService,
         private toastr: ToasterService) {
             
         this.toastrConfig = new ToasterConfig( {

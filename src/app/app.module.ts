@@ -42,7 +42,6 @@ let widgets = [
     MenuAsideComponent
 ];
 
-import { UserService } from './services/user.service';
 import { AuthGuard } from './services/authGuard.service';
 import { AdminGuard } from './services/adminGuard.service';
 import { BreadcrumbService } from './services/breadcrumb.service';
@@ -50,7 +49,6 @@ import { LoggerService } from './services/logger.service';
 import { AuthService } from './services/index';
 import { Configuration} from './app.constants';
 let services = [
-    UserService,
     BreadcrumbService,
     AuthGuard,
     AdminGuard,
