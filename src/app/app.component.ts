@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { User } from './models/user';
 import { UserService } from './services/user.service';
 import { LoggerService } from './services/logger.service';
 import { Message } from './models/message';
@@ -78,19 +77,7 @@ export class AppComponent implements OnInit {
         }
 
         // defining some test users
-        let user1 = new User( {
-            avatarUrl: 'public/assets/img/user2-160x160.jpg',
-            email: 'weber.antoine.pro@gmail.com',
-            firstname: 'WEBER',
-            lastname: 'Antoine'
-        });
-        let user2 = new User( {
-            avatarUrl: 'public/assets/img/user2-160x160.jpg',
-            email: 'EMAIL',
-            firstname: 'FIRSTNAME',
-            lastname: 'LASTNAME'
-        });
-        this.userServ.setCurrentUser( user1 );
+
 
         // define here your own links menu structure
         // this.mylinks = [
